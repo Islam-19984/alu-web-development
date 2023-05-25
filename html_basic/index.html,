@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8"/>
+    <title>Embed tweets</title>
+</head>
+<body>
+    <article>
+        <header>
+
+        <blockquote class="twitter-tweet" data-theme="dark">
+            <p lang="en" dir="ltr">“Up the chels!”
+            <a href="https://twitter.com/ChelseaFC/status/1615437551375900672?s=20&t=Gabc0lkhZf-Er0hpOWbesw">January 19, 2022</a>
+        </blockquote>
+        <script async src="https://platform.twitter.com/widgets.js"></script>
+        </header>
+
+</article>
+
+<article>
+    <p>
+        <a href="index.html" style="text-decoration: none;">HOME</a>
+    </p>
+    <p>
+        Looking forward to a Chelsea win against the Reds this coming weekend
+    </p>
+</article>
+<aside>
+    <p> </p>
+</aside>
+
+<footer>
+    <p>Made by: Islam Omar<br>
+    <a href="i.hemada@alustudent.com"  target="_blank" style="text-decoration: none;">Email</a></p>
+    <small>&copy; Islam Omar</small>
+</footer>
+</body>
+</html>
