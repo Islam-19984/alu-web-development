@@ -1,0 +1,43 @@
+body.works_on_smartphone {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    flex: auto;
+}
+
+article {
+    flex: 2;
+    overflow-y: auto;
+}
+
+aside {
+    flex: 1;
+    overflow-y: auto;
+}
+
+header {
+    flex: 1;
+}
+
+footer {
+    flex: 1;
+}
+
+@media only screen and (max-width: 600px) {
+    /* Add styles here for screens smaller than 600px */
+    body.works_on_smartphone {
+        flex-direction: column;
+    }
+
+    main {
+        flex-direction: column;
+    }
+
+    article, aside {
+        flex: 1;
+    }
+}
