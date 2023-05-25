@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="base.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <title>CHELSEA FC</title>
+</head>
+<body>
+    <article>
+        <header>
+            <h2>Chelsea FC: A Brief History</h2>
+            <p>Chelsea Football Club, commonly referred to as Chelsea, is a professional football club based in London, England. The club was founded in 1905 and has had a long and successful history, winning a number of domestic and international titles. Some of Chelsea's most notable achievements include winning the Premier League five times, the FA Cup eight times, and the UEFA Champions League once. Chelsea is also one of the most valuable football clubs in the world, with a current estimated value of over $2 billion.</p>
+            <h3>Recent Success</h3>
+            <p> Chelsea FC has been consistently competing for the top 4 positions in the premier league and has reached the semi-finals of the UEFA Champions League multiple times in recent years. The team has also won the Europa League twice in the last four years. Chelsea has been known for its strong defense and midfield with a number of world-class players such as N'golo Kante, Jorginho, and Mount and a number of young talented forwards such as Pulisic, Havertz, and Werner.</p>
+            <h4>Future Goals</h4>
+            <p> Chelsea FC is looking to continue its success in the premier league and in Europe. The club is looking to build a strong squad and win multiple trophies in the coming years. The team's current goal is to qualify for the Champions League next season and to compete for the premier league title.</p>
+       </header>
+    </article>
+
+    <article>
+        <p>
+            <a href="https://twitter.com/ChelseaFC/status/1614933976086642694?s=20">Latest signing</a>
+            <script async src="https://platform.twitter.com/widgets.js"></script>
+        </p>
+    </article>
+
+    <article>
+        <p>
+            <a href="tweets.html" style="text-decoration: none;">Havertz and Silva preparing for the Liverpool match</a>
+        </p>
+    </article>
+    <aside>
+        <p>KTBFFH (Keep The Blue Flag Flying High)!</p>
+    </aside>
+
+    <footer>
+        <p>Made by: Islam Omar <br>
+        <a href="i.hemada@alustudent.com"  target="_blank" style="text-decoration: none;">Email</a></p>
+        <small>&copy; Islam Omar</small>
+      </footer>
+
+</body>
+</html>
