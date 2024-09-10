@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""
-1. FIFO caching
+""" 1. FIFO caching
 """
 
 from collection import degue
