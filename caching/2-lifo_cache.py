@@ -1,50 +1,61 @@
-#!/usr/bin/python3
-""" 2. LIFO Caching
-"""
+#!/usr/bin/env python3
+from base_caching import BaseCaching
 
-from collections import deque
-
-BaseCaching = __import__("base_caching").BaseCaching
-
-
-class LIFOCache(Basedcaching):
-    """ you must use self.cache_data - dictionary from the parent class
-    BaseCaching
+class LIFOCache(BaseCaching):
+    """
+    LIFOCache class that inherits from BaseCaching and is a caching system.
+    Implements the LIFO (Last In, First Out) caching algorithm.
     """
 
     def __init__(self):
-        """ Init
+        """
+        Initialize the class with the parent class's attributes.
+        Calls the parent class's constructor using super().
         """
         super().__init__()
-        self.queue = deque()
 
     def put(self, key, item):
-        """ Must assign to the dictionary self.cache_data the item value for
-        the key key
         """
-        if key and item:
-            if key in self.cache_data:
-                self.queue.remove(key)
-            elif self.is_full():
-                self.evict
-            self.queue.append(key)
-            self.cache_data[key] = item
+        Add an item in the cache using the LIFO algorithm.
+
+        Args:
+            key (str): The key for the cache item.
+            item (any): The value associated with the key to store in the cache.
+
+        If the cache exceeds BaseCaching.MAX_ITEMS, the last item added is discarded.
+        If key or item is None, this method does nothing.
+
+        Example:
+            cache.put("A", "Apple")  # Adds 'Apple' to the cache with key 'A'.
+        """
+        if key is None or item is None:
+            return  # Do nothing if key or item is None
+
+        # Add the key-value pair to the cache
+        self.cache_data[key] = item
+
+        # Check if cache size exceeds the maximum allowed items
+        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
+            # LIFO: Discard the last item put in cache
+            last_key = list(self.cache_data.keys())[-2]  # Get the second last key
+            del self.cache_data[last_key]  # Remove the second last item (LIFO behavior)
+            print(f"DISCARD: {last_key}")  # Print the discarded key
 
     def get(self, key):
-        """ Must return the value in self.cach_data linked to key.
         """
-        return self.cache_data.get(key, None)
+        Retrieve an item from the cache using the key.
 
-    def is_full(self):
-        """ If the number of items in self.cache_data is higher that
-        BaseCaching.MAX_ITEMS
-        """
-        return len(self.cache_data) >= self.MAX_ITEMS
+        Args:
+            key (str): The key for the cache item.
 
-    def evict(self):
-        """ you must print DISCARD: with the key discarded and following by a
-        new line -pop-
+        Returns:
+            The value associated with the key, or None if the key is None or
+            if the key does not exist in the cache.
+
+        Example:
+            value = cache.get("A")  # Retrieves the value associated with 'A' from the cache.
         """
-        popped = self.queue.pop()
-        del self.cach_data[popped]
-        print("DISCARD: " + str(popped))
+        if key is None or key not in self.cache_data:
+            return None  # Return None if key is None or does not exist in cache
+        return self.cache_data.get(key)  # Return the value associated with the key
+
