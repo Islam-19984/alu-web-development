@@ -20,7 +20,7 @@ AUTH = Auth()
 @app.route("/", methods=["GET"], strict_slashes=False)
 def index() -> str:
     """
-    Return json respomse
+    Return json response
     {"message": "Bienvenue"}
     """
     return jsonify({"message": "Bienvenue"})
@@ -45,7 +45,7 @@ def users() -> str:
 def login() -> str:
     """
     Log in a user if the credentials provided are correct, and create a new
-    session for them.
+    session for them. Then redirect to the home page.
     """
     email = request.form.get("email")
     password = request.form.get("password")
@@ -54,15 +54,15 @@ def login() -> str:
         abort(401)
 
     session_id = AUTH.create_session(email)
-    resp = jsonify({"email": f"{email}", "message": "logged in"})
-    resp.set_cookie("session_id", session_id)
+    resp = redirect(url_for('index'))  # Redirect to the home page
+    resp.set_cookie("session_id", session_id)  # Set session cookie
     return resp
 
 
 @app.route("/sessions", methods=["DELETE"], strict_slashes=False)
 def logout():
     """
-    Log out a logged in user and destroy their session
+    Log out a logged-in user and destroy their session
     """
     session_id = request.cookies.get("session_id", None)
     user = AUTH.get_user_from_session_id(session_id)
