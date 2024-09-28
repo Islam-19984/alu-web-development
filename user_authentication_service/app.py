@@ -50,19 +50,13 @@ def login():
 def logout():
     """logout"""
     session_id = request.cookies.get("session_id")
-    if not session_id:
-        print("No session ID found or invalid.")
-        abort(403)
-
-    user = AUTH.get_user_from_session_id(session_id)
-    if user:
-        print(f"User found: {user.email}")
-        AUTH.destroy_session(user.id)
-        print("Session destroyed, returning 200 OK.")
-        return jsonify({"message": "Successfully logged out"}), 200
-    else:
-        print("User not found for the session.")
-        abort(403)
+    if session_id:
+        user = AUTH.get_user_from_session_id(session_id)
+        if user:
+            AUTH.destroy_session(user.id)
+            # Instead of a redirect, we return a 200 OK response
+            return jsonify({"message": "Successfully logged out"}), 200
+    abort(403)
 
 
 @app.route('/profile', methods=['GET'])
