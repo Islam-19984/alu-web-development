@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" basic flask app"""
+""" Basic Flask app """
 
 from flask import Flask, jsonify, request, abort, make_response, redirect
 from auth import Auth
@@ -21,8 +21,11 @@ def register_user():
     """register user"""
     email = request.form.get("email")
     password = request.form.get("password")
-    user = AUTH.register_user(email, password)
-    return jsonify({"email": user.email, "message": "user created"})
+    try:
+        user = AUTH.register_user(email, password)
+        return jsonify({"email": user.email, "message": "user created"})
+    except ValueError:
+        return jsonify({"message": "email already registered"}), 400
 
 
 @app.route('/sessions', methods=['POST'])
@@ -34,9 +37,7 @@ def login():
         session_id = AUTH.create_session(email)
         if session_id:
             response = make_response(
-                    jsonify({"email": email,
-                             "session_id": session_id,
-                             "message": "logged in"}))
+                jsonify({"email": email, "session_id": session_id, "message": "logged in"}))
             response.set_cookie('session_id', session_id)
             return response
     abort(401)
@@ -47,10 +48,17 @@ def logout():
     """logout"""
     session_id = request.cookies.get("session_id")
     if session_id:
+        print(f"Session ID: {session_id}")
         user = AUTH.get_user_from_session_id(session_id)
         if user:
+            print(f"User found: {user.email}")
             AUTH.destroy_session(user.id)
+            print("Session destroyed, redirecting to home.")
             return redirect('/')
+        else:
+            print("User not found for the session.")
+    else:
+        print("No session ID found or invalid.")
     abort(403)
 
 
@@ -81,9 +89,9 @@ def update_password():
     """update password"""
     email = request.form.get("email")
     reset_token = request.form.get("reset_token")
-    password = request.form.get("new_password")
+    new_password = request.form.get("new_password")
     try:
-        AUTH.update_password(reset_token, password)
+        AUTH.update_password(reset_token, new_password)
         return jsonify({"email": email, "message": "Password updated"})
     except ValueError:
         abort(403)
@@ -91,4 +99,3 @@ def update_password():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
-    
