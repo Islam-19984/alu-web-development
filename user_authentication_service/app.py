@@ -53,10 +53,11 @@ def login() -> str:
     if not AUTH.valid_login(email, password):
         abort(401)
 
+    # Create a new session and set the session cookie
     session_id = AUTH.create_session(email)
     resp = redirect(url_for('index'))  # Redirect to the home page
     resp.set_cookie("session_id", session_id)  # Set session cookie
-    return resp
+    return resp  # Ensure it returns a 302 redirect
 
 
 @app.route("/sessions", methods=["DELETE"], strict_slashes=False)
