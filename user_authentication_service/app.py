@@ -23,7 +23,7 @@ def register_user():
     password = request.form.get("password")
     try:
         user = AUTH.register_user(email, password)
-        return jsonify({"email": user.email, "message": "user created"})
+        return jsonify({"email": user.email, "message": "user created"}), 201
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
 
@@ -36,8 +36,11 @@ def login():
     if AUTH.valid_login(email, password):
         session_id = AUTH.create_session(email)
         if session_id:
-            response = make_response(
-                jsonify({"email": email, "session_id": session_id, "message": "logged in"}))
+            response = make_response(jsonify({
+                "email": email,
+                "session_id": session_id,
+                "message": "logged in"
+            }))
             response.set_cookie('session_id', session_id)
             return response
     abort(401)
@@ -47,19 +50,19 @@ def login():
 def logout():
     """logout"""
     session_id = request.cookies.get("session_id")
-    if session_id:
-        print(f"Session ID: {session_id}")
-        user = AUTH.get_user_from_session_id(session_id)
-        if user:
-            print(f"User found: {user.email}")
-            AUTH.destroy_session(user.id)
-            print("Session destroyed, redirecting to home.")
-            return redirect('/')
-        else:
-            print("User not found for the session.")
-    else:
+    if not session_id:
         print("No session ID found or invalid.")
-    abort(403)
+        abort(403)
+
+    user = AUTH.get_user_from_session_id(session_id)
+    if user:
+        print(f"User found: {user.email}")
+        AUTH.destroy_session(user.id)
+        print("Session destroyed, returning 200 OK.")
+        return jsonify({"message": "Successfully logged out"}), 200
+    else:
+        print("User not found for the session.")
+        abort(403)
 
 
 @app.route('/profile', methods=['GET'])
@@ -69,7 +72,7 @@ def profile():
     if session_id:
         user = AUTH.get_user_from_session_id(session_id)
         if user:
-            return jsonify({"email": user.email})
+            return jsonify({"email": user.email}), 200
     abort(403)
 
 
@@ -79,7 +82,7 @@ def get_reset_password_token():
     email = request.form.get("email")
     try:
         token = AUTH.get_reset_password_token(email)
-        return jsonify({"email": email, "reset_token": token})
+        return jsonify({"email": email, "reset_token": token}), 200
     except ValueError:
         abort(403)
 
@@ -92,7 +95,7 @@ def update_password():
     new_password = request.form.get("new_password")
     try:
         AUTH.update_password(reset_token, new_password)
-        return jsonify({"email": email, "message": "Password updated"})
+        return jsonify({"email": email, "message": "Password updated"}), 200
     except ValueError:
         abort(403)
 
